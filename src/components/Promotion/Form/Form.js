@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Form.css";
 
@@ -10,9 +10,18 @@ const initValues = {
   price: 0,
 };
 
-const PromotionForm = () => {
-  const [values, setValues] = useState(initValues);
+const PromotionForm = ({ id }) => {
+  const [values, setValues] = useState(id ? null : initValues);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (id) {
+      axios.get(`http://localhost:3004/promotions/${id}`).then((response) => {
+        setValues(response.data);
+      });
+    }
+  }, []);
+
   function onChange(ev) {
     const { name, value } = ev.target;
     setValues({ ...values, [name]: value });
@@ -20,9 +29,18 @@ const PromotionForm = () => {
 
   function onSubmit(ev) {
     ev.preventDefault();
-    axios.post("http://localhost:3004/promotions", values).then((response) => {
+    const method = id ? "put" : "post";
+    const url = id
+      ? `http://localhost:3004/promotions/${id}`
+      : `http://localhost:3004/promotions`;
+
+    axios[method](url, values).then((response) => {
       navigate("/");
     });
+  }
+
+  if (!values) {
+    return <div>carregando...</div>;
   }
   return (
     <div>
@@ -38,6 +56,7 @@ const PromotionForm = () => {
             id="title"
             placeholder="title"
             onChange={onChange}
+            value={values.title}
           />
         </div>
 
@@ -49,6 +68,7 @@ const PromotionForm = () => {
             id="url"
             placeholder="url"
             onChange={onChange}
+            value={values.url}
           />
         </div>
 
@@ -60,6 +80,7 @@ const PromotionForm = () => {
             id="imageUrl"
             placeholder="imageUrl"
             onChange={onChange}
+            value={values.imageUrl}
           />
         </div>
         <div className="promotion-form__grup">
@@ -70,6 +91,7 @@ const PromotionForm = () => {
             id="price"
             placeholder="preço"
             onChange={onChange}
+            value={values.price}
           />
         </div>
         <div>
