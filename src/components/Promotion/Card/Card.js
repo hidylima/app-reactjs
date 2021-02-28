@@ -4,7 +4,7 @@ import "./Card.css";
 
 const PromotionCard = ({ promotion }) => {
   return (
-    <div className="promotion-card">
+    <div className="promotion-card" >
       <img
         src={promotion.imageUrl}
         className="promotion-card__image"
