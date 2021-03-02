@@ -25,7 +25,7 @@ const PromotionForm = ({ id }) => {
     url: id ? `/promotions/${id}` : `/promotions`,
     method: id ? "put" : "post",
     data: values,
-    onCompleted: (respose) => {
+    onCompleted: (respose) => { 
       if (!respose.error) {
         navigate("/");
       }
