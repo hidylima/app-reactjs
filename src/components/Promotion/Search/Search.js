@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import useApi from "../../API/useApi";
 import PromotionList from "../List/List";
@@ -6,7 +6,9 @@ import "./Search.css";
 
 const PromotionSearch = () => {
   const [search, setSearch] = useState("");
+  const mountRef = useRef(null);
   const [load, loadInfo] = useApi({
+    debounceDelay: 1000,
     url: "/promotions",
     method: "get",
     params: {
@@ -18,7 +20,13 @@ const PromotionSearch = () => {
   });
 
   useEffect(() => {
-    load();
+    load({
+      debounced: mountRef.current,
+    });
+
+    if (!mountRef.current) {
+      mountRef.current = true;
+    }
   }, [search]);
 
   return (

@@ -3,7 +3,6 @@ import PromotionCard from "../Card/Card";
 import "./List.css";
 
 const PromotionList = ({ loading, error, promotions }) => {
-  console.log(promotions);
   if (error) {
     return <div>Algo de errado não esta certo...</div>;
   }
