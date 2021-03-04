@@ -1,11 +1,28 @@
-import React from 'react'
+import React from "react";
+import ReactDOM from "react-dom";
+import "./Modal.css";
 
-const UIModal = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+const portalRoot = document.getElementById("portal-root");
 
-export default UIModal
+const UIModal = ({ children, isOpen, onClickClose }) => {
+  if (!isOpen) {
+    return null;
+  }
+
+  return ReactDOM.createPortal(
+    <div className="ui-modal__overlay">
+      <div className="ui-modal">
+        <button
+          type="button"
+          className="ui-modal__close-button"
+          onClick={onClickClose}
+        >
+          x
+        </button>
+        {children}
+      </div>
+    </div>,
+    portalRoot,
+  );
+};
+export default UIModal;
