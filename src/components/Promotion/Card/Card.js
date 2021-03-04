@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Card.css";
 
-const PromotionCard = ({ promotion }) => {
+const PromotionCard = ({ promotion, onClickComents }) => {
   return (
-    <div className="promotion-card" >
+    <div className="promotion-card">
       <img
         src={promotion.imageUrl}
         className="promotion-card__image"
@@ -20,10 +20,13 @@ const PromotionCard = ({ promotion }) => {
             </div>
           )}
 
-          <div className="promotion-card__comments-count">
+          <button
+            className="promotion-card__comments-count"
+            onClick={onClickComents}
+          >
             {promotion.comments.length}{" "}
             {promotion.comments.length > 1 ? "Comentários" : "Comentário"}
-          </div>
+          </button>
 
           <a
             href={promotion.url}
