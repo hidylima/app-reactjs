@@ -24,12 +24,15 @@ const PromotionList = ({ loading, error, promotions }) => {
         <PromotionCard
           promotion={promotion}
           key={promotion.id}
-          onClickComents={() => setPromotionId(promotion.id)}
+          onClickComments={() => setPromotionId(promotion.id)}
         />
       ))}
 
-      <UIModal isOpen={Boolean(promotionId)}>
-        <h1>Comentario</h1>
+      <UIModal
+        isOpen={Boolean(promotionId)}
+        onClickClose={() => setPromotionId(null)}
+      >
+        <h1>Comentários</h1>
       </UIModal>
     </div>
   );
