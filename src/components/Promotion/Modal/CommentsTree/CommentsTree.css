@@ -1,0 +1,21 @@
+.promontio-modal-comments-tree {
+  list-style: none;
+}
+
+.promontio-modal-comments-tree__item {
+  display: flex;
+}
+.promontio-modal-comments-tree__item__avatar {
+  width: 49px;
+  height: 49px;
+  margin-right: 15px;
+}
+
+.promontio-modal-comments-tree__item__info p {
+  font-style: 14px;
+  margin-top: 5px;
+}
+
+.promontio-modal-comments-tree__item__info__name {
+  font-weight: bold;
+}
