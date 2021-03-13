@@ -9,7 +9,9 @@ const initialRequestInfo = {
 };
 
 export default function useApi(config) {
+
   const [requestInfo, setRequestInfo] = useState(initialRequestInfo);
+  
   const debounceAxios = useDebouncePromise(axios, config.debounceDelay);
 
   async function call(localConfig) {
@@ -17,7 +19,9 @@ export default function useApi(config) {
       ...initialRequestInfo,
       loading: true,
     });
+
     let response = null;
+
     const finalConfig = {
       baseURL: "http://localhost:3004",
       ...config,
