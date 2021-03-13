@@ -13,6 +13,7 @@ const initialValue = {
 const PromotionForm = ({ id }) => {
   const [values, setValues] = useState(id ? null : initialValue);
   const navigate = useNavigate();
+  
   const [load] = useApi({
     url: `/promotions/${id}`,
     method: "get",
@@ -36,6 +37,7 @@ const PromotionForm = ({ id }) => {
     if (id) {
       load();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   function onChange(ev) {
