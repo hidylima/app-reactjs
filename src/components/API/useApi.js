@@ -9,17 +9,11 @@ const initialRequestInfo = {
 };
 
 export default function useApi(config) {
-
   const [requestInfo, setRequestInfo] = useState(initialRequestInfo);
-  
+
   const debounceAxios = useDebouncePromise(axios, config.debounceDelay);
 
   async function call(localConfig) {
-    setRequestInfo({
-      ...initialRequestInfo,
-      loading: true,
-    });
-
     let response = null;
 
     const finalConfig = {
@@ -27,6 +21,14 @@ export default function useApi(config) {
       ...config,
       ...localConfig,
     };
+console.log(finalConfig.quiety);
+    if (!finalConfig.quiety) {
+      setRequestInfo({
+        ...initialRequestInfo,
+        loading: true,
+      });
+    }
+
     const fn = finalConfig.debounced ? debounceAxios : axios;
 
     try {
