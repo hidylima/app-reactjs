@@ -22,6 +22,7 @@ const PromotionList = ({ loading, error, promotions }) => {
     <div className="promotion-list">
       {promotions.map((promotion) => (
         <PromotionCard
+          key={promotion.id}
           promotion={promotion}
           onClickComments={() => setPromotionId(promotion.id)}
         />
