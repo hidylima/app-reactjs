@@ -27,7 +27,7 @@ const PromotionList = ({ loading, error, promotions }) => {
           onClickComments={() => setPromotionId(promotion.id)}
         />
       ))}
-      {loading && <div>Carregando mais promoções...</div>}
+      {!loading && <div>Carregando mais promoções...</div>}
       {promotionId && (
         <PromotionModal
           promotionId={promotionId}

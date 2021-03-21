@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import useDebouncedPromise from "components/API/useDebouncePromise";
+import useDebouncedPromise from "components/API/useDebouncedPromise";
 
 const initialRequestInfo = {
   error: null,
@@ -17,7 +17,7 @@ export default function useApi(config) {
 
     const finalConfig = {
       baseURL: "http://localhost:3004",
-      updateRequestInfo: (newInfo) => newInfo, 
+      updateRequestInfo: (newInfo) => newInfo,
       ...config,
       ...localConfig,
     };

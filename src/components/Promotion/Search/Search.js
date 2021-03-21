@@ -18,7 +18,7 @@ const PromotionSearch = () => {
   const mountRef = useRef(null);
   const [search, setSearch] = useState("");
   const [load, loadInfo] = useApi({
-    debounceDelay: 300,
+    debounceDelay: 500,
     url: "/promotions",
     method: "get",
   });
