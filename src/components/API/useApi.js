@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import useDebouncePromise from "./useDebouncePromise";
+import useDebouncedPromise from "components/API/useDebouncedPromise";
 
 const initialRequestInfo = {
   error: null,
@@ -10,44 +10,67 @@ const initialRequestInfo = {
 
 export default function useApi(config) {
   const [requestInfo, setRequestInfo] = useState(initialRequestInfo);
-
-  const debounceAxios = useDebouncePromise(axios, config.debounceDelay);
+  const debouncedAxios = useDebouncedPromise(axios, config.debounceDelay);
 
   async function call(localConfig) {
     let response = null;
 
     const finalConfig = {
       baseURL: "http://localhost:3004",
+      updateRequestInfo: (newInfo) => newInfo,
       ...config,
       ...localConfig,
     };
-console.log(finalConfig.quiety);
-    if (!finalConfig.quiety) {
+
+    if (finalConfig.isFetchMore) {
+      setRequestInfo({
+        ...initialRequestInfo,
+        data: requestInfo.data,
+        loading: true,
+      });
+    } else if (!finalConfig.quietly) {
       setRequestInfo({
         ...initialRequestInfo,
         loading: true,
       });
     }
 
-    const fn = finalConfig.debounced ? debounceAxios : axios;
+    const fn = finalConfig.debounced ? debouncedAxios : axios;
 
     try {
       response = await fn(finalConfig);
-
-      setRequestInfo({
+      console.log(response.headers);
+      const newRequestInfo = {
         ...initialRequestInfo,
         data: response.data,
-      });
+      };
+
+      if (response.headers["x-total-count"] !== undefined) {
+        newRequestInfo.total = Number.parseInt(
+          response.headers["x-total-count"],
+          10,
+        );
+      }
+
+      setRequestInfo(
+        finalConfig.updateRequestInfo(newRequestInfo, requestInfo),
+      );
     } catch (error) {
-      setRequestInfo({
-        ...initialRequestInfo,
-        error,
-      });
+      setRequestInfo(
+        finalConfig.updateRequestInfo(
+          {
+            ...initialRequestInfo,
+            error,
+          },
+          requestInfo,
+        ),
+      );
     }
 
     if (config.onCompleted) {
       config.onCompleted(response);
     }
+    return response;
   }
 
   return [call, requestInfo];
