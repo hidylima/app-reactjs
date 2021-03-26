@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import useApi from "components/API/useApi";
 import UIInfiniteScroll from "components/UI/InfiniteScroll/InfiniteScroll";
-import UIButton from 'components/UI/Button/Button'
+import UIButton from "components/UI/Button/Button";
 import PromotionList from "../List/List";
 import "./Search.css";
 
@@ -60,7 +60,9 @@ const PromotionSearch = () => {
     <div className="promotion-search">
       <header className="promotion-search__header">
         <h1>Promo Show</h1>
-        <UIButton component={Link} theme= "contained-green"to="/create">Nova Promoção</UIButton>
+        <UIButton component={Link} theme="contained-green" to="/create">
+          Nova Promoção
+        </UIButton>
       </header>
       <input
         type="search"
@@ -73,6 +75,11 @@ const PromotionSearch = () => {
         promotions={loadInfo.data}
         loading={loadInfo.loading}
         error={loadInfo.error}
+        refetch={() => {
+          load({
+            params: baseParams,
+          });
+        }}
       />
 
       {loadInfo.data &&

@@ -13,6 +13,7 @@ export default function useApi(config) {
   const debouncedAxios = useDebouncedPromise(axios, config.debounceDelay);
 
   async function call(localConfig) {
+    console.log(localConfig);
     let response = null;
 
     const finalConfig = {
@@ -39,7 +40,6 @@ export default function useApi(config) {
 
     try {
       response = await fn(finalConfig);
-      console.log(response.headers);
       const newRequestInfo = {
         ...initialRequestInfo,
         data: response.data,
