@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import UIButton from "components/UI/Button/Button";
+import { BiTrash } from "react-icons/bi";
 import "./Card.css";
 
-const PromotionCard = ({ promotion, onClickComments }) => (
+const PromotionCard = ({ promotion, onClickComments, onClickeDelte }) => (
   <div className="promotion-card">
     <img
       src={promotion.imageUrl}
@@ -42,6 +43,13 @@ const PromotionCard = ({ promotion, onClickComments }) => (
           Editar
         </UIButton>
       </footer>
+      <button
+        type="button"
+        onClick={onClickeDelte}
+        className="promotion-card__delte-button"
+      >
+        <BiTrash />
+      </button>
     </div>
   </div>
 );
